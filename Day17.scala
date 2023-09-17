@@ -37,13 +37,15 @@ object Day17 {
       y >= 0 && y < map.length && x >= 0 && x < map(y).length
 
     def processStream(streamCoord: Coord2D): Unit = streamCoord match
-      case (x, y) => for (line <- y until map.length) {
-        if (map(line)(x) == WALL) {
-          floodLine(x, line - 1)
-          return
+      case (x, y) =>
+        var currY = y
+        while (currY < map.length && map(currY)(x) != WALL) {
+          map(currY)(x) = STREAM
+          currY += 1
         }
-        map(line)(x) = STREAM
-      }
+        if (currY < map.length) {
+          floodLine(x, currY - 1)
+        }
 
     def floodLine(x: Int, y: Int): Unit = if (y >= 0) {
       map(y)(x) = WATER
@@ -74,7 +76,7 @@ object Day17 {
       else 0
 
     val part1 = map.map(_.count(e => e == WATER || e == STREAM)).sum - wallRegions.map(_.y0).min
-    println(part1)
+    println(s"Part 1: $part1")
 
     val part2 = map.indices.map(y =>
       map(y).indices.map(x =>
@@ -82,7 +84,7 @@ object Day17 {
         else 0
       ).sum
     ).sum
-    println(part2)
+    println(s"Part 2: $part2")
   }
 
   def initMap(wallRegions: Array[Region]): Matrix2D = {
