@@ -67,8 +67,22 @@ object Day17 {
     def addNewStream(x: Int, y: Int) = if ((isInBounds(x + 1, y + 1) && map(y + 1)(x + 1) == WALL) || (isInBounds(x - 1, y + 1) && map(y + 1)(x - 1) == WALL))
       streams.push((x, y))
 
+    def countWaterAtRest(x: Int, y: Int, acc: Int = 0): Int =
+      if (!isInBounds(x, y)) 0
+      else if (map(y)(x) == WALL) acc
+      else if (map(y)(x) == WATER) countWaterAtRest(x + 1, y, acc + 1)
+      else 0
+
     val part1 = map.map(_.count(e => e == WATER || e == STREAM)).sum - wallRegions.map(_.y0).min
     println(part1)
+
+    val part2 = map.indices.map(y =>
+      map(y).indices.map(x =>
+        if (map(y)(x) == WALL) countWaterAtRest(x + 1, y)
+        else 0
+      ).sum
+    ).sum
+    println(part2)
   }
 
   def initMap(wallRegions: Array[Region]): Matrix2D = {
