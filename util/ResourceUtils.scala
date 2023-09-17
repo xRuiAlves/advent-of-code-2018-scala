@@ -1,7 +1,9 @@
+package util
+
 import scala.io.Source
 import scala.util.Using
 
-object Util {
+object ResourceUtils {
   final def readResourceLines(fileName: String): Array[String] = {
     Using(Source.fromResource(fileName)) {
       _.getLines().toArray
