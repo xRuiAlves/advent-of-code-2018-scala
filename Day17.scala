@@ -9,7 +9,6 @@ import scala.collection.mutable
 import java.nio.file.{Paths, Files}
 import java.nio.charset.StandardCharsets
 
-
 object Day17 {
   type Matrix2D = Array[Array[MapValue]]
   type Coord2D = (Int, Int)
@@ -17,7 +16,7 @@ object Day17 {
   private[this] final val InitialStreamPosition: Coord2D = (500, 0)
 
   enum MapValue {
-    case EMPTY, WALL, WATER, STREAM, WATER_AT_REST
+    case EMPTY, WALL, WATER, STREAM
   }
 
   def main(args: Array[String]): Unit = {
@@ -51,12 +50,14 @@ object Day17 {
       map(y)(x) = WATER
       val hasStreamLeft = floodLeft(x - 1, y)
       val hasStreamRight = floodRight(x + 1, y)
-      if (!hasStreamLeft && !hasStreamRight ) floodLine(x, y - 1)
+      if (!hasStreamLeft && !hasStreamRight) floodLine(x, y - 1)
     }
 
     def floodLeft(x: Int, y: Int): Boolean = floodHorizontal(x, y, -1)
     def floodRight(x: Int, y: Int): Boolean = floodHorizontal(x, y, 1)
-    def floodHorizontal(x: Int, y: Int, delta: Int): Boolean = if (isInBounds(x, y) && map(y)(x) != WALL) {
+    def floodHorizontal(x: Int, y: Int, delta: Int): Boolean = if (
+      isInBounds(x, y) && map(y)(x) != WALL
+    ) {
       if (isEmptyUnder(x, y)) {
         addNewStream(x, y)
         true
@@ -66,7 +67,11 @@ object Day17 {
       }
     } else false
 
-    def addNewStream(x: Int, y: Int) = if ((isInBounds(x + 1, y + 1) && map(y + 1)(x + 1) == WALL) || (isInBounds(x - 1, y + 1) && map(y + 1)(x - 1) == WALL))
+    def addNewStream(x: Int, y: Int) = if (
+      (isInBounds(x + 1, y + 1) && map(y + 1)(x + 1) == WALL) || (isInBounds(x - 1, y + 1) && map(
+        y + 1
+      )(x - 1) == WALL)
+    )
       streams.push((x, y))
 
     def countWaterAtRest(x: Int, y: Int, acc: Int = 0): Int =
@@ -75,15 +80,20 @@ object Day17 {
       else if (map(y)(x) == WATER) countWaterAtRest(x + 1, y, acc + 1)
       else 0
 
-    val part1 = map.map(_.count(e => e == WATER || e == STREAM)).sum - wallRegions.map(_.y0).min
-    println(s"Part 1: $part1")
+    lazy val part1 =
+      map.map(_.count(e => e == WATER || e == STREAM)).sum - wallRegions.map(_.y0).min
+    lazy val part2 = map.indices
+      .map(y =>
+        map(y).indices
+          .map(x =>
+            if (map(y)(x) == WALL) countWaterAtRest(x + 1, y)
+            else 0
+          )
+          .sum
+      )
+      .sum
 
-    val part2 = map.indices.map(y =>
-      map(y).indices.map(x =>
-        if (map(y)(x) == WALL) countWaterAtRest(x + 1, y)
-        else 0
-      ).sum
-    ).sum
+    println(s"Part 1: $part1")
     println(s"Part 2: $part2")
   }
 
