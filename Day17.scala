@@ -119,15 +119,12 @@ object Day17 {
 
   case class Region(x0: Int, x1: Int, y0: Int, y1: Int)
   object Region {
-    private[this] final val VerticalLinePattern = "^x=(?<x>\\d+), y=(?<y0>\\d+)\\.\\.(?<y1>\\d+)$".r
-    private[this] final val HorizontalLinePattern =
-      "^y=(?<y>\\d+), x=(?<x0>\\d+)\\.\\.(?<x1>\\d+)$".r
 
     def apply(x0: String, x1: String, y0: String, y1: String): Region =
       Region(x0.toInt, x1.toInt, y0.toInt, y1.toInt)
 
     def apply(regionStr: String): Region = regionStr match
-      case VerticalLinePattern(x, y0, y1)   => Region(x, x, y0, y1)
-      case HorizontalLinePattern(y, x0, x1) => Region(x0, x1, y, y)
+      case s"x=$x, y=$y0..$y1" => Region(x, x, y0, y1)
+      case s"y=$y, x=$x0..$x1" => Region(x0, x1, y, y)
   }
 }
