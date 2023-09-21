@@ -9,8 +9,6 @@ import util.ResourceUtils.readResourceLines
 
 import scala.collection.mutable
 import scala.annotation.tailrec
-import java.nio.file.{Files, Paths}
-import java.nio.charset.StandardCharsets
 
 object Day19 {
   private[this] case class Instruction(opcode: String, op1: Int, op2: Int, op3: Int)

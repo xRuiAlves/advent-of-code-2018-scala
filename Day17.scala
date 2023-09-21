@@ -6,8 +6,6 @@
 import Day17.MapValue._
 import util.ResourceUtils.readResourceLines
 import scala.collection.mutable
-import java.nio.file.{Paths, Files}
-import java.nio.charset.StandardCharsets
 
 object Day17 {
   type Matrix2D = Array[Array[MapValue]]

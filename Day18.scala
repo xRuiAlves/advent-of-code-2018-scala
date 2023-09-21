@@ -6,8 +6,6 @@
 import util.ResourceUtils.readResourceLines
 import scala.collection.mutable
 import scala.annotation.tailrec
-import java.nio.file.{Paths, Files}
-import java.nio.charset.StandardCharsets
 
 object Day18 {
   type Matrix2D = Array[Array[Char]]
