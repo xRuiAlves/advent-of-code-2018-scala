@@ -24,24 +24,28 @@ object Day19 {
       .map(_.split(" ").toList)
       .map {
         case List(opcode, op1, op2, op3) => Instruction(opcode, op1.toInt, op2.toInt, op3.toInt)
-        case _ => throw new Error("Invalid input line!")
+        case _                           => throw new Error("Invalid input line!")
       }
 
-    def runProgram(registers: Array[Int], ip: Int = 0, numIters: Option[Int] = Option.empty): Array[Int] =
+    def runProgram(
+        registers: Array[Int],
+        ip: Int = 0,
+        numIters: Option[Int] = Option.empty
+    ): Array[Int] =
       if (ip >= instructions.length || numIters.exists(_ <= 0)) registers
       else {
         registers(ipRegister) = ip
         val instruction = instructions(ip)
 
-        instruction.opcode match {
-          case "addi" => registers(instruction.op3) = registers(instruction.op1) + instruction.op2
-          case "addr" => registers(instruction.op3) = registers(instruction.op1) + registers(instruction.op2)
-          case "seti" => registers(instruction.op3) = instruction.op1
-          case "setr" => registers(instruction.op3) = registers(instruction.op1)
-          case "mulr" => registers(instruction.op3) = registers(instruction.op1) * registers(instruction.op2)
-          case "muli" => registers(instruction.op3) = registers(instruction.op1) * instruction.op2
-          case "eqrr" => registers(instruction.op3) = if (registers(instruction.op1) == registers(instruction.op2)) 1 else 0
-          case "gtrr" => registers(instruction.op3) = if (registers(instruction.op1) > registers(instruction.op2)) 1 else 0
+        registers(instruction.op3) = instruction.opcode match {
+          case "addi" => registers(instruction.op1) + instruction.op2
+          case "addr" => registers(instruction.op1) + registers(instruction.op2)
+          case "seti" => instruction.op1
+          case "setr" => registers(instruction.op1)
+          case "mulr" => registers(instruction.op1) * registers(instruction.op2)
+          case "muli" => registers(instruction.op1) * instruction.op2
+          case "eqrr" => if (registers(instruction.op1) == registers(instruction.op2)) 1 else 0
+          case "gtrr" => if (registers(instruction.op1) > registers(instruction.op2)) 1 else 0
         }
 
         runProgram(registers, registers(ipRegister) + 1, numIters.map(_ - 1))
