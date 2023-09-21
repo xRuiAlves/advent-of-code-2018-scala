@@ -49,7 +49,13 @@ object Day19 {
 
     val part1 = runProgram(Array(0, 0, 0, 0, 0, 0)).head
     println(s"Part 1: $part1")
-    
+
+    // After A LOT of debugging and banging my head against this, I noticed there were some patterns in the registers array
+    // (such as numbers repeating themselves in different columns). After trying to sum, divide, and multiply a bunch of
+    // them to try and understand what on earth was going on, finally realized that the program was computing the sum of
+    // the factors of a number! Which is actually super simple. After running for a while, the last register will stay the
+    // same forever (I'm running it for 1000 iterations to make sure some time passes). Then, we can just compute the sum
+    // of the factors for that number!
     val part2 = divisors(runProgram(Array(1, 0, 0, 0, 0, 0), numIters = Some(1000)).last).sum
     println(s"Part 2: $part2")
   }
