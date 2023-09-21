@@ -1,6 +1,7 @@
 //> using scala "3.3.0"
 //> using jvm "temurin:17"
 //> using file util/ResourceUtils.scala
+//> using file util/NumUtils.scala
 //> using resourceDir inputs
 
 import util.NumUtils.divisors
@@ -48,5 +49,8 @@ object Day19 {
 
     val part1 = runProgram(Array(0, 0, 0, 0, 0, 0)).head
     println(s"Part 1: $part1")
+    
+    val part2 = divisors(runProgram(Array(1, 0, 0, 0, 0, 0), numIters = Some(1000)).last).sum
+    println(s"Part 2: $part2")
   }
 }
