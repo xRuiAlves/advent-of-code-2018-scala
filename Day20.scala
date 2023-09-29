@@ -24,8 +24,7 @@ object Day20 {
   private[this] final val RegexGroupOr = '|'
 
   def main(args: Array[String]): Unit = {
-    val regex = readResourceLine("day20.txt")
-      .toCharArray
+    val regex = readResourceLine("day20.txt").toCharArray
       .drop(1)
       .dropRight(1)
     val graph = buildGraph(regex)
@@ -47,7 +46,9 @@ object Day20 {
       }
 
       graph(curr).foreach(neighbor => {
-        if (!roomDistances.contains(neighbor) || roomDistances(neighbor) > roomDistances(curr) + 1) {
+        if (
+          !roomDistances.contains(neighbor) || roomDistances(neighbor) > roomDistances(curr) + 1
+        ) {
           roomDistances(neighbor) = roomDistances(curr) + 1
           toVisit.enqueue(neighbor)
         }
@@ -90,12 +91,11 @@ object Day20 {
         positions = starts
       case direction =>
         val (diffX, diffY) = DirectionSteps(direction)
-        positions = positions.map {
-          case curr @ (x, y) =>
-            val next = (x + diffX, y + diffY)
-            addGraphLink(curr, next)
-            addGraphLink(next, curr)
-            next
+        positions = positions.map { case curr @ (x, y) =>
+          val next = (x + diffX, y + diffY)
+          addGraphLink(curr, next)
+          addGraphLink(next, curr)
+          next
         }
     }
 
