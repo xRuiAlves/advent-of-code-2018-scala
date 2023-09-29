@@ -36,10 +36,15 @@ object Day20 {
     toVisit.enqueue((0, 0))
     roomDistances((0, 0)) = 0
     var furthestDistance = 0
+    var numFarRooms = 0
 
     while (toVisit.nonEmpty) {
       val curr = toVisit.dequeue()
       furthestDistance = math.max(furthestDistance, roomDistances(curr))
+
+      if (roomDistances(curr) >= FarRoomDistance) {
+        numFarRooms += 1
+      }
 
       graph(curr).foreach(neighbor => {
         if (!roomDistances.contains(neighbor) || roomDistances(neighbor) > roomDistances(curr) + 1) {
@@ -50,6 +55,7 @@ object Day20 {
     }
 
     println(s"Part 1: $furthestDistance")
+    println(s"Part 2: $numFarRooms")
   }
 
   def buildGraph(regex: Array[Char]): mutable.Map[Coord2D, mutable.Set[Coord2D]] = {
