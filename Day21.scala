@@ -1,10 +1,8 @@
 //> using scala "3.3.0"
 //> using jvm "temurin:17"
 //> using file util/ResourceUtils.scala
-//> using file util/NumUtils.scala
 //> using resourceDir inputs
 
-import util.NumUtils.divisors
 import util.ResourceUtils.readResourceLines
 
 import scala.collection.mutable
