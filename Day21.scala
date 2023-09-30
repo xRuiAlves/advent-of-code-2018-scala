@@ -29,25 +29,24 @@ object Day21 {
         case _                           => throw new Error("Invalid input line!")
       }
 
-    def evalInstruction(instruction: Instruction, registers: Array[Int]): Int =
-      instruction.opcode match {
-        case "addi" => registers(instruction.op1) + instruction.op2
-        case "addr" => registers(instruction.op1) + registers(instruction.op2)
-        case "seti" => instruction.op1
-        case "setr" => registers(instruction.op1)
-        case "mulr" => registers(instruction.op1) * registers(instruction.op2)
-        case "muli" => registers(instruction.op1) * instruction.op2
-        case "eqrr" => if (registers(instruction.op1) == registers(instruction.op2)) 1 else 0
-        case "eqir" => if (instruction.op1 == registers(instruction.op2)) 1 else 0
-        case "eqri" => if (registers(instruction.op1) == instruction.op2) 1 else 0
-        case "gtrr" => if (registers(instruction.op1) > registers(instruction.op2)) 1 else 0
-        case "gtir" => if (instruction.op1 > registers(instruction.op2)) 1 else 0
-        case "gtri" => if (registers(instruction.op1) > instruction.op2) 1 else 0
-        case "banr" => registers(instruction.op1) & registers(instruction.op2)
-        case "bani" => registers(instruction.op1) & instruction.op2
-        case "borr" => registers(instruction.op1) | registers(instruction.op2)
-        case "bori" => registers(instruction.op1) | instruction.op2
-      }
+    def evalInstruction(instruction: Instruction, registers: Array[Int]): Int = instruction.opcode match {
+      case "addi" => registers(instruction.op1) + instruction.op2
+      case "addr" => registers(instruction.op1) + registers(instruction.op2)
+      case "seti" => instruction.op1
+      case "setr" => registers(instruction.op1)
+      case "mulr" => registers(instruction.op1) * registers(instruction.op2)
+      case "muli" => registers(instruction.op1) * instruction.op2
+      case "eqrr" => if (registers(instruction.op1) == registers(instruction.op2)) 1 else 0
+      case "eqir" => if (instruction.op1 == registers(instruction.op2)) 1 else 0
+      case "eqri" => if (registers(instruction.op1) == instruction.op2) 1 else 0
+      case "gtrr" => if (registers(instruction.op1) > registers(instruction.op2)) 1 else 0
+      case "gtir" => if (instruction.op1 > registers(instruction.op2)) 1 else 0
+      case "gtri" => if (registers(instruction.op1) > instruction.op2) 1 else 0
+      case "banr" => registers(instruction.op1) & registers(instruction.op2)
+      case "bani" => registers(instruction.op1) & instruction.op2
+      case "borr" => registers(instruction.op1) | registers(instruction.op2)
+      case "bori" => registers(instruction.op1) | instruction.op2
+    }
 
     @tailrec
     def findLowerBound(
