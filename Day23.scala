@@ -52,7 +52,8 @@ object Day23 {
       )
     })
 
-    def search(count: Int = 0, maxCount: Int = 0, result: Int = 0): Int = if (toVisit.isEmpty) result else {
+    def search(count: Int = 0, maxCount: Int = 0, result: Int = 0): Int = if (toVisit.isEmpty) result
+    else {
       val curr = toVisit.dequeue()
       val newCount = count + curr.lineSegmentDelta
       search(newCount, math.max(newCount, maxCount), if (newCount > maxCount) curr.distance else result)
