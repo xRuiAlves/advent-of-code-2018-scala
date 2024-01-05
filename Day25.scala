@@ -29,7 +29,6 @@ object Day25 {
     def isClose(other: Coord4D): Boolean = manhattanDistance(this, other) <= 3
   }
 
-
   object Coord4D {
     def fromStr(coordStr: String): Coord4D = coordStr match
       case s"$x,$y,$z,$w" => Coord4D(x.toInt, y.toInt, z.toInt, w.toInt)
