@@ -14,15 +14,13 @@ object Day25 {
     val coords = input.map(Coord4D.fromStr)
 
     val visited = mutable.Set[Coord4D]()
-    var galaxies = 0
-    coords.foreach(curr => {
-      if (!visited.contains(curr)) {
-        galaxies += 1
-        bfs(coords, curr, visited)
-      }
+    val result = coords.count(curr => {
+      val isNewGalaxy = !visited.contains(curr)
+      bfs(coords, curr, visited)
+      isNewGalaxy
     })
 
-    println(s"Result: $galaxies")
+    println(s"Result: $result")
   }
 
   case class Coord4D(x: Int, y: Int, z: Int, w: Int) {
